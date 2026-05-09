@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>arwas_world - Simply Elegant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #F9F8F6;
+            color: #1A1A1A;
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        nav {
+            background: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1A1A1A;
+        }
+
+        .logo-tagline {
+            font-size: 0.7rem;
+            color: #808080;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1A1A1A;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #D4AF37;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .search-bar {
+            border: 1px solid #E0E0E0;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            width: 200px;
+            font-size: 0.9rem;
+        }
+
+        .cart-badge {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #D4AF37;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.7), rgba(128, 128, 128, 0.5)),
+                        url('https://picsum.photos/1200/600');
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #E8E8E8;
+        }
+
+        .hero-btn {
+            background: white;
+            color: #1A1A1A;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .hero-btn:hover {
+            background: #D4AF37;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Product Grid */
+        .products-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2remote;
+            margin-bottom: 3rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 300px;
+            background: #E8E8E8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: #1A1A1A;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #D4AF37;
+            margin-bottom: 1rem;
+        }
+
+        .product-colors {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .color-option {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        .color-option:hover {
+            border-color: #1A1A1A;
+        }
+
+        .product-sizes {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .size-option {
+            padding: 0.4rem 0.8rem;
+            border: 1px solid #E0E0E0;
+            background: white;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .size-option:hover, .size-option.active {
+            background: #1A1A1A;
+            color: white;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            padding: 0.75rem;
+            background: #1A1A1A;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .add-to-cart:hover {
+            background: #D4AF37;
+            color: #1A1A1A;
+        }
+
+        /* Featured Collection */
+        .featured-section {
+            padding: 4rem 2rem;
+            background: white;
+        }
+
+        .featured-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .featured-image {
+            width: 100%;
+            height: 400px;
+            background: #E8E8E8;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .featured-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .featured-content p {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .featured-btn {
+            background: #1A1A1A;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .featured-btn:hover {
+            background: #D4AF37;
+            color: #1A1A1A;
+        }
+
+        .featured-reverse {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .featured-reverse .featured-content {
+            order: -1;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: #F9F8F6;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .newsletter-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .newsletter p {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .newsletter-form button {
+            padding: 0.75rem 1.5rem;
+            background: #1A1A1A;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .newsletter-form button:hover {
+            background: #D4AF37;
+            color: #1A1A1A;
+        }
+
+        /* Footer */
+        footer {
+            background: #1A1A1A;
+            color: white;
+            padding: 3rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-column ul li a {
+            color: #C0C0C0;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #D4AF37;
+        }
+
+        .footer-divider {
+            border-top: 1px solid #333;
+            padding-top: 2rem;
+            margin-top: 2rem;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: #C0C0C0;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .social-links a:hover {
+            color: #D4AF37;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .search-bar {
+                width: 100px;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .featured-container {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-container .featured-image {
+                order: 1;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 1.5rem;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-left">
+            <div>
+                <div class="logo">arwas_world</div>
+                <div class="logo-tagline">SIMPLY ELEGANT</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#shop">Shop</a></li>
+                <li><a href="#apparel">Apparel</a></li>
+                <li><a href="#gifts">Gifts</a></li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <input type="text" class="search-bar" placeholder="Search products...">
+            <div class="cart-badge">
+                🛒
+                <span class="badge">3</span>
+            </div>
+            <a href="#account" style="text-decoration: none; color: #1A1A1A;">👤</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Custom Printed Apparel</h1>
+            <p>Premium Design & Printing Services | Est. 2020</p>
+            <button class="hero-btn">Start Your Design</button>
+        </div>
+    </section>
+
+    <!-- Featured Collection 1 -->
+    <section class="featured-section">
+        <div class="featured-container">
+            <div class="featured-image">
+                <img src="https://picsum.photos/600/400?random=5" alt="Premium Comfort Collection">
+            </div>
+            <div class="featured-content">
+                <h2>Custom Apparel</h2>
+                <p>Transform your vision into reality. Our expert design and printing services bring your ideas to life on premium hoodies, jerseys, polos, and t-shirts. From concept to final product, we ensure exceptional quality and personalized touches.</p>
+                <button class="featured-btn">Order Custom Apparel</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <h2 class="section-title">Our Collection</h2>
+        <div class="product-grid">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://picsum.photos/400/500?random=1" alt="T-Shirt">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Custom Printed T-Shirt</h3>
+                    <div class="product-price">From KES 1,499</div>
+                    <div class="product-colors">
+                        <div class="color-option" style="background: #000;"></div>
+                        <div class="color-option" style="background: #FFF; border: 2px solid #999;"></div>
+                        <div class="color-option" style="background: #FF0000;"></div>
+                        <div class="color-option" style="background: #008080;"></div>
+                    </div>
+                    <div class="product-sizes">
+                        <button class="size-option">XS</button>
+                        <button class="size-option active">S</button>
+                        <button class="size-option">M</button>
+                        <button class="size-option">L</button>
+                        <button class="size-option">XL</button>
+                    </div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://picsum.photos/400/500?random=2" alt="Hoodie">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Custom Printed Hoodie</h3>
+                    <div class="product-price">From KES 2,499</div>
+                    <div class="product-colors">
+                        <div class="color-option" style="background: #2E5090;"></div>
+                        <div class="color-option" style="background: #696969;"></div>
+                        <div class="color-option" style="background: #FF4500;"></div>
+                        <div class="color-option" style="background: #228B22;"></div>
+                    </div>
+                    <div class="product-sizes">
+                        <button class="size-option">XS</button>
+                        <button class="size-option">S</button>
+                        <button class="size-option active">M</button>
+                        <button class="size-option">L</button>
+                        <button class="size-option">XL</button>
+                    </div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://picsum.photos/400/500?random=3" alt="Jersey">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Custom Printed Jersey</h3>
+                    <div class="product-price">From KES 1,999</div>
+                    <div class="product-colors">
+                        <div class="color-option" style="background: #FFD700;"></div>
+                        <div class="color-option" style="background: #000;"></div>
+                        <div class="color-option" style="background: #FF1493;"></div>
+                        <div class="color-option" style="background: #0047AB;"></div>
+                    </div>
+                    <div class="product-sizes">
+                        <button class="size-option">XS</button>
+                        <button class="size-option">S</button>
+                        <button class="size-option">M</button>
+                        <button class="size-option active">L</button>
+                        <button class="size-option">XL</button>
+                    </div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://picsum.photos/400/500?random=4" alt="Polo">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Custom Printed Polo</h3>
+                    <div class="product-price">From KES 1,899</div>
+                    <div class="product-colors">
+                        <div class="color-option" style="background: #800020;"></div>
+                        <div class="color-option" style="background: #4B0082;"></div>
+                        <div class="color-option" style="background: #006666;"></div>
+                        <div class="color-option" style="background: #654321;"></div>
+                    </div>
+                    <div class="product-sizes">
+                        <button class="size-option">XS</button>
+                        <button class="size-option">S</button>
+                        <button class="size-option">M</button>
+                        <button class="size-option">L</button>
+                        <button class="size-option active">XL</button>
+                    </div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Collection 2 -->
+    <section class="featured-section">
+        <div class="featured-container featured-reverse">
+            <div class="featured-image">
+                <img src="https://picsum.photos/600/400?random=6" alt="Gifts & Merchandise">
+            </div>
+            <div class="featured-content">
+                <h2>Design & Printing Services</h2>
+                <p>Professional design services for all your branding needs. We specialize in custom printing on tumblers, bottles, mugs, and more. Whether it's corporate branding or personal projects, our expert team delivers exceptional designs with premium printing quality.</p>
+                <button class="featured-btn">Explore Services</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="newsletter-content">
+            <h2>Design Inspiration & Offers</h2>
+            <p>Get design tips and exclusive discounts on custom printing and apparel delivered to your inbox</p>
+            <form class="newsletter-form" onsubmit="event.preventDefault();">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>About</h3>
+                <p style="font-size: 0.9rem; color: #C0C0C0; line-height: 1.6;">
+                    arwas_world - "Simply Elegant" - Premium Design & Printing since 2020. Specializing in custom apparel and branded merchandise for Kenya 🇰🇪, Oman 🇴🇲, and worldwide clients.
+                </p>
+            </div>
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#shipping">Shipping Info (Kenya & Oman)</a></li>
+                    <li><a href="#returns">Returns & Exchanges</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Shop</h3>
+                <ul>
+                    <li><a href="#apparel">Custom Apparel</a></li>
+                    <li><a href="#design">Design Services</a></li>
+                    <li><a href="#printing">Printing Services</a></li>
+                    <li><a href="#merchandise">Branded Merchandise</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="https://instagram.com/giftmateoman" target="_blank">Instagram: @giftmateoman</a></li>
+                    <li><a href="https://instagram.com/tidmusic" target="_blank">Instagram: @tidmusic</a></li>
+                    <li><a href="mailto:giftmateoman@gmail.com">Email: giftmateoman@gmail.com</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-divider">
+            <div class="footer-bottom">
+                <p>&copy; 2026 arwas_world. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#instagram">Instagram</a>
+                    <a href="#twitter">Twitter</a>
+                    <a href="#facebook">Facebook</a>
+                    <a href="#whatsapp">WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
