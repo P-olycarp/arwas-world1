@@ -1,0 +1,5 @@
+Delete the following files:
+- AdminAboutSettings.jsx
+- AdminContactSettings.jsx
+- AdminFooterSettings.jsx
+- AdminNewsletterSettings.jsx
