@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = '/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 const getAuthToken = () => {
   try {
@@ -51,10 +51,12 @@ export const createProduct = async (productData) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(productData)
   });
+
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
     throw new Error(errorData.error || `Failed to create product: ${response.statusText}`);
   }
+
   return response.json();
 };
 
@@ -64,10 +66,12 @@ export const updateProduct = async (id, productData) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(productData)
   });
+
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
     throw new Error(errorData.error || `Failed to update product: ${response.statusText}`);
   }
+
   return response.json();
 };
 
@@ -75,10 +79,12 @@ export const deleteProduct = async (id) => {
   const response = await fetch(`${API_BASE_URL}/products/${id}`, {
     method: 'DELETE'
   });
+
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
     throw new Error(errorData.error || `Failed to delete product: ${response.statusText}`);
   }
+
   return response.json();
 };
 
@@ -89,25 +95,33 @@ export const createOrder = async (orderData) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(orderData)
   });
+
   if (!response.ok) throw new Error('Failed to create order');
+
   return response.json();
 };
 
 export const getOrder = async (id) => {
   const response = await fetch(`${API_BASE_URL}/orders/${id}`);
+
   if (!response.ok) throw new Error('Failed to fetch order');
+
   return response.json();
 };
 
 export const getOrders = async () => {
   const response = await fetch(`${API_BASE_URL}/orders`);
+
   if (!response.ok) throw new Error('Failed to fetch orders');
+
   return response.json();
 };
 
 export const trackOrder = async (orderNumber) => {
   const response = await fetch(`${API_BASE_URL}/orders/track/${orderNumber}`);
+
   if (!response.ok) throw new Error('Failed to track order');
+
   return response.json();
 };
 
@@ -117,7 +131,9 @@ export const updateOrderStatus = async (id, statusData) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(statusData)
   });
+
   if (!response.ok) throw new Error('Failed to update order');
+
   return response.json();
 };
 
@@ -127,10 +143,12 @@ export const updateOrder = async (id, orderData) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(orderData)
   });
+
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
     throw new Error(errorData.error || 'Failed to update order');
   }
+
   return response.json();
 };
 
@@ -141,7 +159,9 @@ export const registerUser = async (userData) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(userData)
   });
+
   if (!response.ok) throw new Error('Failed to register');
+
   return response.json();
 };
 
@@ -151,60 +171,84 @@ export const loginUser = async (email, password) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password })
   });
+
   if (!response.ok) throw new Error('Failed to login');
+
   return response.json();
 };
 
 export const getUser = async (id) => {
   const response = await fetch(`${API_BASE_URL}/users/${id}`);
+
   if (!response.ok) throw new Error('Failed to fetch user');
+
   return response.json();
 };
 
 export const getUserOrders = async (userId) => {
   const response = await fetch(`${API_BASE_URL}/users/${userId}/orders`);
+
   if (!response.ok) throw new Error('Failed to fetch user orders');
+
   return response.json();
 };
+
 // Settings (Admin)
 export const getSettings = async () => {
   const response = await fetch(`${API_BASE_URL}/public/settings`);
+
   if (!response.ok) throw new Error('Failed to fetch settings');
+
   return response.json();
 };
 
 export const updateSettings = async (settingsData) => {
   const response = await fetch(`${API_BASE_URL}/settings`, {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
+    headers: {
+      'Content-Type': 'application/json',
+      ...getAuthHeaders()
+    },
     body: JSON.stringify(settingsData)
   });
+
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
     throw new Error(errorData.error || 'Failed to update settings');
   }
+
   return response.json();
 };
 
 export const updateSettingsSection = async (section, data) => {
   const response = await fetch(`${API_BASE_URL}/settings/${section}`, {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
+    headers: {
+      'Content-Type': 'application/json',
+      ...getAuthHeaders()
+    },
     body: JSON.stringify(data)
   });
+
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
     throw new Error(errorData.error || 'Failed to update settings');
   }
+
   return response.json();
 };
 
 export const resetSettings = async () => {
   const response = await fetch(`${API_BASE_URL}/settings/reset`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getAuthHeaders() }
+    headers: {
+      'Content-Type': 'application/json',
+      ...getAuthHeaders()
+    }
   });
+
   if (!response.ok) throw new Error('Failed to reset settings');
+
   return response.json();
 };
 
@@ -213,10 +257,15 @@ export const uploadSettingsImage = async (file, section) => {
   const formData = new FormData();
   formData.append('image', file);
 
-  const endpoint = section ? `${API_BASE_URL}/settings/upload/${section}` : `${API_BASE_URL}/settings/upload`;
+  const endpoint = section
+    ? `${API_BASE_URL}/settings/upload/${section}`
+    : `${API_BASE_URL}/settings/upload`;
+
   const response = await fetch(endpoint, {
     method: 'POST',
-    headers: { ...getAuthHeaders() },
+    headers: {
+      ...getAuthHeaders()
+    },
     body: formData
   });
 
@@ -224,5 +273,6 @@ export const uploadSettingsImage = async (file, section) => {
     const errorData = await response.json().catch(() => ({}));
     throw new Error(errorData.error || 'Failed to upload image');
   }
+
   return response.json();
 };
